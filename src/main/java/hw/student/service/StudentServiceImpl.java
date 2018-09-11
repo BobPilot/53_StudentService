@@ -28,18 +28,7 @@ public class StudentServiceImpl implements IStudentService {
 	public StudentResponseDto deleteStudent(int id) {
 
 		Student student = studentRepository.removeStudent(id);
-
-		if(student == null){
-			return null;
-		}
-
-		StudentResponseDto srd = new StudentResponseDto();
-		srd.setId(student.getId());
-		srd.setName(student.getName());
-		srd.setScores(student.getScores());
-
-		return srd;
-
+		return studentResponseDto(student);
 	}
 
 	@Override
@@ -98,11 +87,17 @@ public class StudentServiceImpl implements IStudentService {
 	@Override
 	public StudentResponseDto getStudent(int id) {
 		Student student = studentRepository.getStudentById(id);
+		return studentResponseDto(student);
+	}
+
+	private StudentResponseDto studentResponseDto(Student student) {
+		if(student == null){
+			return null;
+		}
 		StudentResponseDto studentResponse = new StudentResponseDto();
 		studentResponse.setId(student.getId());
 		studentResponse.setName(student.getName());
 		studentResponse.setScores(student.getScores());
-
 		return studentResponse;
 	}
 
